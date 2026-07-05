@@ -1,3 +1,6 @@
+export const VIEW_COLS = 8;
+export const VIEW_ROWS = 7;
+
 export const EQUIPMENT_COLS = 3;
 export const EQUIPMENT_SLOTS = 6;
 

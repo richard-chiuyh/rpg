@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ACTION_BUTTONS } from "../config";
+import { ACTION_BUTTONS, VIEW_COLS, VIEW_ROWS } from "../config";
 import mapData from "../data/map.json";
 import { CharacterIcon } from "../core/tileIcons";
 import { isWalkable, TILES } from "../core/tiles";
@@ -18,7 +18,11 @@ interface Vec2 {
 
 const gameMap = mapData as GameMap;
 
-const SPAWN: Vec2 = { x: 4, y: 3 };
+const SPAWN: Vec2 = { x: 7, y: 7 };
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
+}
 
 const MOVES: Record<string, Vec2> = {
   w: { x: 0, y: -1 },
@@ -57,18 +61,29 @@ function Cell({ code, isPlayer }: { code: number; isPlayer: boolean }) {
 }
 
 function Grid({ player }: { player: Vec2 }) {
+  const camX = clamp(player.x - Math.floor(VIEW_COLS / 2), 0, gameMap.map_width - VIEW_COLS);
+  const camY = clamp(player.y - Math.floor(VIEW_ROWS / 2), 0, gameMap.map_height - VIEW_ROWS);
+
   return (
     <div
       className="grid gap-[3px] flex-1 min-h-0 self-center max-w-full border border-line bg-panel2 p-1"
       style={{
-        gridTemplateColumns: `repeat(${gameMap.map_width}, 1fr)`,
-        aspectRatio: `${gameMap.map_width} / ${gameMap.map_height}`
+        gridTemplateColumns: `repeat(${VIEW_COLS}, 1fr)`,
+        aspectRatio: `${VIEW_COLS} / ${VIEW_ROWS}`
       }}
     >
-      {gameMap.data.flatMap((row, y) =>
-        row.map((code, x) => (
-          <Cell key={`${x}-${y}`} code={code} isPlayer={player.x === x && player.y === y} />
-        ))
+      {Array.from({ length: VIEW_ROWS }).flatMap((_, vy) =>
+        Array.from({ length: VIEW_COLS }, (_, vx) => {
+          const wx = camX + vx;
+          const wy = camY + vy;
+          return (
+            <Cell
+              key={`${wx}-${wy}`}
+              code={gameMap.data[wy][wx]}
+              isPlayer={player.x === wx && player.y === wy}
+            />
+          );
+        })
       )}
     </div>
   );

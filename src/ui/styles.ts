@@ -3,8 +3,10 @@ export const PANEL =
 
 export const STAT_BAR = "h-2.5 border border-line-strong bg-panel2 overflow-hidden";
 
-export const FILL_COLOR: Record<string, string> = {
+export const FILL_COLOR = {
   hp: "bg-hp",
   mp: "bg-mp",
   xp: "bg-xp"
-};
+} as const;
+
+export type StatModifier = keyof typeof FILL_COLOR;

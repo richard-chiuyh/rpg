@@ -1,5 +1,5 @@
-import { Tabs } from "../core/tabs";
-import { PANEL } from "../core/ui";
+import { Tabs } from "../ui/Tabs";
+import { PANEL } from "../ui/styles";
 
 const EMPTY = "h-full min-h-[60px] border border-line bg-panel2";
 

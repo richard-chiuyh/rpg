@@ -3,24 +3,35 @@ import { EnemiesPanel } from "./panels/enemiesPanel";
 import { InventoryPanel } from "./panels/inventoryPanel";
 import { MapPanel } from "./panels/mapPanel";
 import { QuestsPanel } from "./panels/questsPanel";
-
-const COLUMN = "grid gap-2.5 min-w-0 min-h-0";
-const SIDE_ROWS = "grid-rows-[1fr_1fr] max-[820px]:grid-rows-none";
+import { GameProvider } from "./systems/game";
 
 export function App() {
   return (
-    <div className="grid gap-2.5 items-stretch h-[calc(100vh-32px)] grid-cols-[minmax(180px,1fr)_minmax(0,2.4fr)_minmax(180px,1fr)] max-[820px]:grid-cols-1 max-[820px]:h-auto">
-      <aside className={`${COLUMN} ${SIDE_ROWS}`}>
-        <CharacterPanel />
-        <InventoryPanel />
-      </aside>
-      <main className={`${COLUMN} grid-rows-[1fr]`}>
-        <MapPanel />
-      </main>
-      <aside className={`${COLUMN} ${SIDE_ROWS}`}>
-        <EnemiesPanel />
-        <QuestsPanel />
-      </aside>
-    </div>
+    <GameProvider>
+      <div className="flex h-dvh w-full bg-black">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <div className="m-1 min-h-0 flex-1 grid">
+            <CharacterPanel />
+          </div>
+          <div className="m-1 min-h-0 flex-1 grid">
+            <InventoryPanel />
+          </div>
+        </div>
+        <div className="flex min-h-0 min-w-0 flex-3 flex-col">
+          <div className="m-1 min-h-0 flex-3">
+            <MapPanel />
+          </div>
+          <div className="m-1 min-h-0 flex-1 border border-line bg-panel p-2.5" />
+        </div>
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <div className="m-1 min-h-0 flex-1 grid">
+            <EnemiesPanel />
+          </div>
+          <div className="m-1 min-h-0 flex-1 grid">
+            <QuestsPanel />
+          </div>
+        </div>
+      </div>
+    </GameProvider>
   );
 }

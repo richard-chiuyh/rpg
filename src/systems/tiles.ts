@@ -1,5 +1,5 @@
 import { type ComponentType } from "react";
-import { ChestIcon, EnemyIcon, TreeIcon } from "./tileIcons";
+import { ChestIcon, TreeIcon } from "../ui/TileIcons";
 
 export const TILE = {
   EMPTY: 0,
@@ -15,15 +15,14 @@ interface TileDef {
   blocking?: boolean;
 }
 
-export const TILES: Record<number, TileDef> = {
+export const TILES: Partial<Record<number, TileDef>> = {
   [TILE.TREE]: {
     label: "Tree",
     className: "border-tree text-tree",
     Icon: TreeIcon,
     blocking: true
   },
-  [TILE.CHEST]: { label: "Chest", className: "border-chest text-chest", Icon: ChestIcon },
-  [TILE.ENEMY]: { label: "Enemy", className: "border-enemy text-enemy", Icon: EnemyIcon }
+  [TILE.CHEST]: { label: "Chest", className: "border-chest text-chest", Icon: ChestIcon }
 };
 
 export function isWalkable(code: number): boolean {

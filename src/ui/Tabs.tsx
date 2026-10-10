@@ -26,7 +26,7 @@ export function Tabs({ defs }: { defs: TabDef[] }) {
           </button>
         ))}
       </div>
-      <div className="flex-1 min-h-0 overflow-auto">
+      <div className="scrollbar-hidden flex-1 min-h-0 overflow-auto">
         {defs.map((def, index) => (
           <div key={def.label} hidden={index !== active}>
             {def.content}
